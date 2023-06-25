@@ -1,0 +1,127 @@
+-- Create a ScreenGui to hold the GUI elements
+local gui = Instance.new("ScreenGui")
+gui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Create a Frame to hold the text field, buttons, and toggle
+local frame = Instance.new("Frame")
+frame.Position = UDim2.new(0.5, -100, 0.5, 30)
+frame.Size = UDim2.new(0, 200, 0, 150)
+frame.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
+frame.Active = true
+frame.Draggable = true
+frame.Parent = gui
+
+-- Create a title TextLabel
+local title = Instance.new("TextLabel")
+title.Position = UDim2.new(0, 10, 0, 5)
+title.Size = UDim2.new(1, -20, 0, 20)
+title.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
+title.TextColor3 = Color3.new(1, 1, 1)
+title.TextSize = 16
+title.Text = "ONE SCRIPT EXECUTOR"
+title.TextScaled = true
+title.Parent = frame
+
+-- Create a TextBox for the user to enter Lua code
+local textBox = Instance.new("TextBox")
+textBox.Position = UDim2.new(0, 10, 0, 30)
+textBox.Size = UDim2.new(1, -20, 0, 40)
+textBox.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
+textBox.Text = "" -- Clear initial text
+textBox.TextColor3 = Color3.new(1, 1, 1)
+textBox.TextScaled = true
+textBox.PlaceholderText = "Your loadstring() script here" -- Set placeholder text
+textBox.Parent = frame
+
+-- Create a Button to execute the entered code
+local button = Instance.new("TextButton")
+button.Position = UDim2.new(0, 10, 0, 77.5)
+button.Size = UDim2.new(1, -20, 0, 30)
+button.BackgroundColor3 = Color3.new(0.2, 0.6, 1)
+button.TextColor3 = Color3.new(0.1, 0.1, 0.1)
+button.Text = "Execute Script"
+button.Parent = frame
+
+-- Create a ToggleButton
+local toggleButton = Instance.new("TextButton")
+toggleButton.Position = UDim2.new(0, 10, 0, 115)
+toggleButton.Size = UDim2.new(0, 30, 0, 30)
+toggleButton.BackgroundColor3 = Color3.new(0, 0, 0)
+toggleButton.TextColor3 = Color3.new(1, 1, 1)
+toggleButton.Text = "✓" -- Display checkmark initially
+toggleButton.Font = Enum.Font.SourceSansBold
+toggleButton.TextSize = 20
+toggleButton.Parent = frame
+
+-- Create a TextLabel for delete after execute text
+local deleteText = Instance.new("TextLabel")
+deleteText.Position = UDim2.new(0, 50, 0, 115)
+deleteText.Size = UDim2.new(0, 140, 0, 30)
+deleteText.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+deleteText.TextColor3 = Color3.new(1, 1, 1)
+deleteText.TextSize = 14
+deleteText.BackgroundTransparency = 1
+deleteText.Text = "Delete after Execute"
+deleteText.TextScaled = true
+deleteText.TextWrapped = true
+deleteText.Parent = frame
+
+-- Variable to track toggle state
+local isDeleteAfterExecute = true -- Initially set to "on"
+
+-- Function to toggle delete after execute state
+local function toggleDeleteAfterExecute()
+    isDeleteAfterExecute = not isDeleteAfterExecute
+    if isDeleteAfterExecute then
+        toggleButton.Text = "✓" -- Display checkmark when toggled on
+        title.Text = "LOADSTRING EXECUTOR"
+        wait(0.01)
+        title.Text = "LOADSTRINT EXECUTOR"
+        wait(0.01)
+        title.Text = "LOADSTRIPT EXECUTOR"
+        wait(0.01)
+        title.Text = "LOADSCRIPT EXECUTOR"
+        wait(0.01)
+        title.Text = "LOAD SCRIPT EXECUTOR"
+        wait(0.01)
+        title.Text = "LOAE SCRIPT EXECUTOR"
+        wait(0.01)
+        title.Text = "LONE SCRIPT EXECUTOR"
+        wait(0.01)
+        title.Text = "ONE SCRIPT EXECUTOR"
+    else
+        toggleButton.Text = "" -- Hide checkmark when toggled off
+        title.Text = "ONE SCRIPT EXECUTOR"
+        wait(0.01)
+        title.Text = "LONE SCRIPT EXECUTOR"
+        wait(0.01)
+        title.Text = "LOA SCRIPT EXECUTOR"
+        wait(0.01)
+        title.Text = "LOAD SCRIPT EXECUTOR"
+        wait(0.01)
+        title.Text = "LOADSCRIPT EXECUTOR"
+        wait(0.01)
+        title.Text = "LOADSTRIPT EXECUTOR"
+        wait(0.01)
+        title.Text = "LOADSTRINT EXECUTOR"
+        wait(0.01)
+        title.Text = "LOADSTRING EXECUTOR"
+    end
+end
+
+-- Connect the toggle button click event to the toggleDeleteAfterExecute function
+toggleButton.MouseButton1Click:Connect(toggleDeleteAfterExecute)
+
+-- Function to execute the entered code
+local function runCode()
+    local code = textBox.Text
+    if code ~= "" then
+        if isDeleteAfterExecute then
+            gui:Destroy()
+        end
+        local success, err = pcall(loadstring(code))
+    end
+end
+
+-- Connect the button click event to the runCode function
+button.MouseButton1Click:Connect(runCode)
