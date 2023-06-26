@@ -69,6 +69,13 @@ deleteText.Parent = frame
 -- Variable to track toggle state
 local isDeleteAfterExecute = true -- Initially set to "on"
 
+if not isfolder('OSE_Executor') then
+    makefolder('OSE_Executor')
+end
+if not isfolder('OSE_Executor\\Saved_Scripts') then
+    makefolder('OSE_Executor\\Saved_Scripts')
+end
+
 -- Function to toggle delete after execute state
 local function toggleDeleteAfterExecute()
     isDeleteAfterExecute = not isDeleteAfterExecute
@@ -112,16 +119,33 @@ end
 -- Connect the toggle button click event to the toggleDeleteAfterExecute function
 toggleButton.MouseButton1Click:Connect(toggleDeleteAfterExecute)
 
+local fileNum = "0"
+
 -- Function to execute the entered code
 local function runCode()
+    local fileNum = 1
+    while isfile("OSE_Executor\\Saved_Scripts\\Script_" .. fileNum .. ".txt") do
+        fileNum = fileNum + 1
+    end
+
     local code = textBox.Text
     if code ~= "" then
-        if isDeleteAfterExecute then
-            gui:Destroy()
+        local success, result = pcall(loadstring(code))
+        if not success then
+            print("Error executing code: " .. result)
+            game:GetService("StarterGui"):SetCore("SendNotification", {Title = "OSE", Duration = 3, Text = "Error executing!"})
+        else
+            if isDeleteAfterExecute then
+                gui:Destroy()
+            end
+            local content = result or code -- Use result if not nil, otherwise use the original code
+            writefile("OSE_Executor\\Saved_Scripts\\Script_" .. fileNum .. ".txt", tostring(content))
+            game:GetService("StarterGui"):SetCore("SendNotification", {Title = "OSE", Duration = 4, Text = "Script saved under: Script_" .. fileNum .. ".txt"})
         end
-        local success, err = pcall(loadstring(code))
     end
 end
 
 -- Connect the button click event to the runCode function
 button.MouseButton1Click:Connect(runCode)
+
+game:GetService("StarterGui"):SetCore("SendNotification", {Title = "OSE", Duration = 8, Text = "Welcome to OSE!\nThis is a simple Executor!"})
