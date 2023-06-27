@@ -122,6 +122,7 @@ toggleButton.MouseButton1Click:Connect(toggleDeleteAfterExecute)
 local fileNum = "0"
 
 -- Function to execute the entered code
+-- Function to execute the entered code
 local function runCode()
     local fileNum = 1
     while isfile("OSE_Executor\\Saved_Scripts\\Script_" .. fileNum .. ".txt") do
@@ -130,18 +131,38 @@ local function runCode()
 
     local code = textBox.Text
     if code ~= "" then
+        -- Check for space or incorrect code start
+        if code:find("%s") or not code:find("^%s*loadstring") then
+            print("Error executing code: Invalid code format")
+            game:GetService("StarterGui"):SetCore("SendNotification", {Title = "OSE", Duration = 5, Text = "Invalid code format!"})
+            return  -- Exit the function without further execution
+        end
+
+        -- Extract website address from loadstring URL
+        local website = code:match("https?://([^/]+)")
+        if website then
+            website = website:gsub("^www%.", "")  -- Remove leading "www." if present
+        end
+
+        game:GetService("StarterGui"):SetCore("SendNotification", {Title = "OSE", Duration = 4, Text = "Loading..."})
         local success, result = pcall(loadstring(code))
         if not success then
+            local errorPrefix = "This website (" .. (website or "unknown") .. ") has nothing on it!"
+            if result:find("This website has nothing on it") then
+                result = errorPrefix
+            end
             print("Error executing code: " .. result)
-            game:GetService("StarterGui"):SetCore("SendNotification", {Title = "OSE", Duration = 3, Text = "Error executing!"})
+            game:GetService("StarterGui"):SetCore("SendNotification", {Title = "OSE", Duration = 5, Text = "Error executing: " .. result})
         else
             if isDeleteAfterExecute then
                 gui:Destroy()
             end
-            local content = result or code -- Use result if not nil, otherwise use the original code
+            local content = result or code
             writefile("OSE_Executor\\Saved_Scripts\\Script_" .. fileNum .. ".txt", tostring(content))
             game:GetService("StarterGui"):SetCore("SendNotification", {Title = "OSE", Duration = 4, Text = "Script saved under: Script_" .. fileNum .. ".txt"})
         end
+    else
+        game:GetService("StarterGui"):SetCore("SendNotification", {Title = "OSE", Duration = 5, Text = "Error executing: This website has nothing on it!"})
     end
 end
 
