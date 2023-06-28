@@ -184,6 +184,7 @@ local function CloseGUI()
     gui:Destroy()
 end
 
+Minimize GUI()
 close.MouseButton1Click:Connect(CloseGUI)
 mini.MouseButton1Click:Connect(MinimizeGUI)
 
