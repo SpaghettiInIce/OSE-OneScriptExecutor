@@ -5,47 +5,84 @@ gui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 -- Create a Frame to hold the text field, buttons, and toggle
 local frame = Instance.new("Frame")
 frame.Position = UDim2.new(0.5, -100, 0.5, 30)
-frame.Size = UDim2.new(0, 200, 0, 150)
+frame.Size = UDim2.new(0, 200, 0, 270)
 frame.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
 frame.Active = true
 frame.Draggable = true
 frame.Parent = gui
 
+-- Create a Button to minimize the GUI
+local mini = Instance.new("TextButton")
+mini.Position = UDim2.new(0, 10, 0, 5)
+mini.Size = UDim2.new(1, -45, 0, 15)
+mini.BackgroundColor3 = Color3.new(0.2, 0.6, 1)
+mini.TextColor3 = Color3.new(0.1, 0.1, 0.1)
+mini.Text = "MINIMIZE"
+mini.TextSize = 20
+mini.Font = Enum.Font.SourceSansBold
+mini.Parent = frame
+
+-- Create a Button to close the GUI
+local close = Instance.new("TextButton")
+close.Position = UDim2.new(0, 170, 0, 5)
+close.Size = UDim2.new(1, -180, 0, 15)
+close.BackgroundColor3 = Color3.new(1, 0.4, 0.4)
+close.TextColor3 = Color3.new(0.1, 0.1, 0.1)
+close.Text = "X"
+close.TextSize = 20
+close.Font = Enum.Font.SourceSansBold
+close.Parent = frame
+
 -- Create a title TextLabel
 local title = Instance.new("TextLabel")
-title.Position = UDim2.new(0, 10, 0, 5)
+title.Position = UDim2.new(0, 10, 0, 25)
 title.Size = UDim2.new(1, -20, 0, 20)
 title.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
 title.TextColor3 = Color3.new(1, 1, 1)
 title.TextSize = 16
 title.Text = "ONE SCRIPT EXECUTOR"
 title.TextScaled = true
+title.Font = Enum.Font.SourceSansBold
 title.Parent = frame
 
 -- Create a TextBox for the user to enter Lua code
 local textBox = Instance.new("TextBox")
-textBox.Position = UDim2.new(0, 10, 0, 30)
-textBox.Size = UDim2.new(1, -20, 0, 40)
+textBox.Position = UDim2.new(0, 10, 0, 50)
+textBox.Size = UDim2.new(1, -20, 0, 30)
 textBox.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
 textBox.Text = "" -- Clear initial text
 textBox.TextColor3 = Color3.new(1, 1, 1)
-textBox.TextScaled = true
+textBox.TextSize = 10
 textBox.PlaceholderText = "Your loadstring() script here" -- Set placeholder text
+textBox.Font = Enum.Font.SourceSansBold
 textBox.Parent = frame
 
 -- Create a Button to execute the entered code
 local button = Instance.new("TextButton")
-button.Position = UDim2.new(0, 10, 0, 77.5)
-button.Size = UDim2.new(1, -20, 0, 30)
+button.Position = UDim2.new(0, 10, 0, 85)
+button.Size = UDim2.new(1, -20, 0, 20)
 button.BackgroundColor3 = Color3.new(0.2, 0.6, 1)
 button.TextColor3 = Color3.new(0.1, 0.1, 0.1)
 button.Text = "Execute Script"
+button.TextSize = 20
+button.Font = Enum.Font.SourceSansBold
 button.Parent = frame
+
+-- Create a Button to save the entered code to auto execute
+local addtoauto = Instance.new("TextButton")
+addtoauto.Position = UDim2.new(0, 10, 0, 110)
+addtoauto.Size = UDim2.new(1, -20, 0, 20)
+addtoauto.BackgroundColor3 = Color3.new(0.2, 0.6, 1)
+addtoauto.TextColor3 = Color3.new(0.1, 0.1, 0.1)
+addtoauto.Text = "Add to Auto Execute"
+addtoauto.TextSize = 20
+addtoauto.Font = Enum.Font.SourceSansBold
+addtoauto.Parent = frame
 
 -- Create a ToggleButton
 local toggleButton = Instance.new("TextButton")
-toggleButton.Position = UDim2.new(0, 10, 0, 115)
-toggleButton.Size = UDim2.new(0, 30, 0, 30)
+toggleButton.Position = UDim2.new(0, 10, 0, 135)
+toggleButton.Size = UDim2.new(0, 25, 0, 25)
 toggleButton.BackgroundColor3 = Color3.new(0, 0, 0)
 toggleButton.TextColor3 = Color3.new(1, 1, 1)
 toggleButton.Text = "✓" -- Display checkmark initially
@@ -55,7 +92,7 @@ toggleButton.Parent = frame
 
 -- Create a TextLabel for delete after execute text
 local deleteText = Instance.new("TextLabel")
-deleteText.Position = UDim2.new(0, 50, 0, 115)
+deleteText.Position = UDim2.new(0, 50, 0, 132.5)
 deleteText.Size = UDim2.new(0, 140, 0, 30)
 deleteText.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
 deleteText.TextColor3 = Color3.new(1, 1, 1)
@@ -64,16 +101,105 @@ deleteText.BackgroundTransparency = 1
 deleteText.Text = "Delete after Execute"
 deleteText.TextScaled = true
 deleteText.TextWrapped = true
+deleteText.Font = Enum.Font.SourceSansBold
 deleteText.Parent = frame
+
+-- Create a SaveButton
+local saveButton = Instance.new("TextButton")
+saveButton.Position = UDim2.new(0, 10, 0, 167.5)
+saveButton.Size = UDim2.new(0, 25, 0, 25)
+saveButton.BackgroundColor3 = Color3.new(0, 0, 0)
+saveButton.TextColor3 = Color3.new(1, 1, 1)
+saveButton.Text = "" -- Display checkmark initially
+saveButton.Font = Enum.Font.SourceSansBold
+saveButton.TextSize = 20
+saveButton.Parent = frame
+
+-- Create a TextLabel for save script text
+local saveText = Instance.new("TextLabel")
+saveText.Position = UDim2.new(0, 50, 0, 165)
+saveText.Size = UDim2.new(0, 140, 0, 30)
+saveText.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+saveText.TextColor3 = Color3.new(1, 1, 1)
+saveText.TextSize = 14
+saveText.BackgroundTransparency = 1
+saveText.Text = "Save after Execute"
+saveText.TextScaled = true
+saveText.TextWrapped = true
+saveText.Font = Enum.Font.SourceSansBold
+saveText.Parent = frame
+
+-- Create a TextBox for loading script
+local loadScriptBox = Instance.new("TextBox")
+loadScriptBox.Position = UDim2.new(0, 10, 0, 200)
+loadScriptBox.Size = UDim2.new(1, -20, 0, 30)
+loadScriptBox.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
+loadScriptBox.Text = "" -- Clear initial text
+loadScriptBox.TextColor3 = Color3.new(1, 1, 1)
+loadScriptBox.TextScaled = true
+loadScriptBox.PlaceholderText = "Script file to load"
+loadScriptBox.Font = Enum.Font.SourceSansBold
+loadScriptBox.Parent = frame
+
+-- Create a Button to load the script
+local loadScriptButton = Instance.new("TextButton")
+loadScriptButton.Position = UDim2.new(0, 10, 0, 235)
+loadScriptButton.Size = UDim2.new(1, -20, 0, 30)
+loadScriptButton.BackgroundColor3 = Color3.new(0.2, 0.6, 1)
+loadScriptButton.TextColor3 = Color3.new(0.1, 0.1, 0.1)
+loadScriptButton.Text = "Load Script"
+loadScriptButton.TextSize = 20
+loadScriptButton.Font = Enum.Font.SourceSansBold
+loadScriptButton.Parent = frame
+
+local function MinimizeGUI()
+    if mini.Text == "MINIMIZE" then
+        mini.Text = "OPEN"
+  		textBox.Visible = false
+    	button.Visible = false
+     	addtoauto.Visible = false
+      	toggleButton.Visible = false
+       	deleteText.Visible = false
+        saveButton.Visible = false
+        saveText.Visible = false
+       	loadScriptBox.Visible = false
+        loadScriptButton.Visible = false
+        frame.Size = UDim2.new(0, 200, 0, 50)
+    else
+    	mini.Text = "MINIMIZE"
+  		textBox.Visible = true
+    	button.Visible = true
+     	addtoauto.Visible = true
+      	toggleButton.Visible = true
+       	deleteText.Visible = true
+        saveButton.Visible = true
+        saveText.Visible = true
+       	loadScriptBox.Visible = true
+        loadScriptButton.Visible = true
+        frame.Size = UDim2.new(0, 200, 0, 270)
+    end
+end
+
+local function CloseGUI()
+    gui:Destroy()
+end
+
+close.MouseButton1Click:Connect(CloseGUI)
+mini.MouseButton1Click:Connect(MinimizeGUI)
 
 -- Variable to track toggle state
 local isDeleteAfterExecute = true -- Initially set to "on"
+local isSaveAfterExecute = false -- Initially set to "off"
 
 if not isfolder('OSE_Executor') then
     makefolder('OSE_Executor')
 end
 if not isfolder('OSE_Executor\\Saved_Scripts') then
     makefolder('OSE_Executor\\Saved_Scripts')
+end
+
+if not isfolder('OSE_Executor\\AutoExecute') then
+    makefolder('OSE_Executor\\AutoExecute')
 end
 
 -- Function to toggle delete after execute state
@@ -116,12 +242,53 @@ local function toggleDeleteAfterExecute()
     end
 end
 
+-- AutoExecuteb thing
+local aecount = 1
+
+while isfile("OSE_Executor\\AutoExecute\\AutoExec_" .. aecount .. ".txt") do
+	loadstring(readfile("OSE_Executor\\AutoExecute\\AutoExec_" .. aecount .. ".txt"))()
+    print(aecount)
+    aecount = aecount + 1
+end
+
+local function toggleSaveAfterExecute()
+    isSaveAfterExecute = not isSaveAfterExecute
+    if isSaveAfterExecute then
+        saveButton.Text = "✓" -- Display checkmark when toggled on
+    else
+        saveButton.Text = "" -- Hide checkmark when toggled off
+    end
+end
+
+local autoFNum = "0"
+
+-- Function to execute the entered code
+local function addToAutoExecute()
+    local autoFNum = 1
+    while isfile("OSE_Executor\\AutoExecute\\AutoExec_" .. autoFNum .. ".txt") do
+        autoFNum = autoFNum + 1
+    end
+
+    local code = textBox.Text
+    if code ~= "" then
+        -- Check for space or incorrect code start
+        if code:find("%s") or not code:find("^%s*loadstring") then
+            game:GetService("StarterGui"):SetCore("SendNotification", {Title = "OSE", Duration = 5, Text = "Invalid code format!"})
+            return  -- Exit the function without further execution
+        end
+
+        writefile("OSE_Executor\\AutoExecute\\AutoExec_" .. autoFNum .. ".txt", code)
+        game:GetService("StarterGui"):SetCore("SendNotification", {Title = "OSE", Duration = 4, Text = "Added to Auto Execute!"})
+    end
+end
+
 -- Connect the toggle button click event to the toggleDeleteAfterExecute function
 toggleButton.MouseButton1Click:Connect(toggleDeleteAfterExecute)
+saveButton.MouseButton1Click:Connect(toggleSaveAfterExecute)
+addtoauto.MouseButton1Click:Connect(addToAutoExecute)
 
 local fileNum = "0"
 
--- Function to execute the entered code
 -- Function to execute the entered code
 local function runCode()
     local fileNum = 1
@@ -133,7 +300,6 @@ local function runCode()
     if code ~= "" then
         -- Check for space or incorrect code start
         if code:find("%s") or not code:find("^%s*loadstring") then
-            print("Error executing code: Invalid code format")
             game:GetService("StarterGui"):SetCore("SendNotification", {Title = "OSE", Duration = 5, Text = "Invalid code format!"})
             return  -- Exit the function without further execution
         end
@@ -144,7 +310,11 @@ local function runCode()
             website = website:gsub("^www%.", "")  -- Remove leading "www." if present
         end
 
-        game:GetService("StarterGui"):SetCore("SendNotification", {Title = "OSE", Duration = 4, Text = "Loading..."})
+        game:GetService("StarterGui"):SetCore("SendNotification", {Title = "OSE", Duration = 0, Text = "Loading..."})
+        if isDeleteAfterExecute then
+            gui:Destroy()
+        end
+
         local success, result = pcall(loadstring(code))
         if not success then
             local errorPrefix = "This website (" .. (website or "unknown") .. ") has nothing on it!"
@@ -154,17 +324,36 @@ local function runCode()
             print("Error executing code: " .. result)
             game:GetService("StarterGui"):SetCore("SendNotification", {Title = "OSE", Duration = 5, Text = "Error executing: " .. result})
         else
-            if isDeleteAfterExecute then
-                gui:Destroy()
-            end
             local content = result or code
-            writefile("OSE_Executor\\Saved_Scripts\\Script_" .. fileNum .. ".txt", tostring(content))
-            game:GetService("StarterGui"):SetCore("SendNotification", {Title = "OSE", Duration = 4, Text = "Script saved under: Script_" .. fileNum .. ".txt"})
+            if isSaveAfterExecute then
+            	writefile("OSE_Executor\\Saved_Scripts\\Script_" .. fileNum .. ".txt", tostring(content))
+            	game:GetService("StarterGui"):SetCore("SendNotification", {Title = "OSE", Duration = 4, Text = "Script Loaded!\nScript saved under: Script_" .. fileNum .. ".txt"})
+            else
+            	game:GetService("StarterGui"):SetCore("SendNotification", {Title = "OSE", Duration = 4, Text = "Script Loaded!"})
+			end
         end
-    else
-        game:GetService("StarterGui"):SetCore("SendNotification", {Title = "OSE", Duration = 5, Text = "Error executing: This website has nothing on it!"})
     end
 end
+
+-- Function to load and execute the script from the loadScriptBox
+local function loadScript()
+    local file = loadScriptBox.Text .. ".txt"
+    local script = "nil"
+    if isfile("OSE_Executor\\Saved_Scripts\\" .. file) then
+	    script = readfile("OSE_Executor\\Saved_Scripts\\" .. file)
+    end
+	if file ~= ".txt" and not file:find("%s") then
+	    if script ~= "nil" then
+	        textBox.Text = script
+	        game:GetService("StarterGui"):SetCore("SendNotification", {Title = "OSE", Duration = 8, Text = "replaced text with: " .. file})
+	    else
+	        game:GetService("StarterGui"):SetCore("SendNotification", {Title = "OSE", Duration = 8, Text = "'" .. file .. "' does not exist"})
+	    end
+    end
+    print(script)
+end
+
+loadScriptButton.MouseButton1Click:Connect(loadScript)
 
 -- Connect the button click event to the runCode function
 button.MouseButton1Click:Connect(runCode)
